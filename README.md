@@ -9,7 +9,7 @@ XSSRadare will use some hardcoded payloads to test for XSS , for now we prefer t
 
 ### Requirements : 
 
-You can install all the dependencies for XSSRadare using the following commands : 
+You can install all the dependencies for XSSRadare using the following commands (for debian based distros): 
 
 ```askar@hackbook:~# sudo ./system_requirments.sh ```
 
