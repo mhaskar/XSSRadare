@@ -5,13 +5,13 @@
 
 using XSSRadare you can scan a single URL or mulitple URLs from XSS by using selenuim web driver as a fuzzing interface , XSSRadare will help you to identify any XSS vulnerability in your web application.
 
+XSSRadare will use some hardcoded payloads to test for XSS , for now we prefer to write payload that conatins ```alert``` javascript function because we already implemented the fuzzer to test for any alert triggered in the scaned page. 
 
-
-### Requirements
+### Requirements : 
 
 You can install all the dependencies for XSSRadare using the following commands : 
 
-```askar@hackbook : sudo ./system_requirments.sh ```
+```askar@hackbook:~# sudo ./system_requirments.sh ```
 
 And make sure to add this line to your ```.bashrc``` file manually :
 
@@ -19,10 +19,14 @@ And make sure to add this line to your ```.bashrc``` file manually :
 
 This line will make sure to link the geckodriver path to your current ```PATH``` so the XSSRadare can recognize it.
 
+##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one geckodriver-v0.20.1 x64 version).
+
+### Usage : 
+
 After installing all the dependencies , you can run this command to start XSSRadare :
 
 ``` 
-askar@hackbook : python XSSRadare.py  -h
+askar@hackbook:~# python XSSRadare.py  -h
 
  \ \/ / __/ __| _ \__ _ __| |___ _ _
   >  <\__ \__ \   / _` / _` / -_) '_|
@@ -44,11 +48,19 @@ optional arguments:
 
 ```
 
+This command can be explained as following :
+
+- -h : to show this help banner.
+- --url : the URL you want to scan.
+- --view : to choose if you want to show the firefox browser during the fuzzing , you can control it by use (on / off) flags.
+- --stop : XSSRadare will stop fuzzing once it found any XSS.
+- --negative : to show the negative scan results (something like verbose).
+- --file : file name that contains all URLs that you want to scan.
 
 You can start a simple XSS scan for a url using the following command : 
 
 ```
-askar@hackbook : python XSSRadare.py --url "http://localhost/xss.php?name=askar&age=21"
+askar@hackbook:~# python XSSRadare.py --url "http://localhost/xss.php?name=askar&age=21"
  __  _____ ___ ___         _
  \ \/ / __/ __| _ \__ _ __| |___ _ _
   >  <\__ \__ \   / _` / _` / -_) '_|
@@ -59,7 +71,9 @@ askar@hackbook : python XSSRadare.py --url "http://localhost/xss.php?name=askar&
 [+] XSS Found on http://localhost/xss.php with params age=21&name=<script>alert("XSSED:D:")</script>
 [+] Scan finished , number of found XSS : 1 
 
-askar@hackbook : 
-
-
+askar@hackbook:~#
 ```
+
+### Screenshots :
+
+
