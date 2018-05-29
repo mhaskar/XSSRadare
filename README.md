@@ -19,7 +19,7 @@ And make sure to add this line to your ```.bashrc``` file manually :
 
 This line will make sure to link the geckodriver path to your current ```PATH``` so the XSSRadare can recognize it.
 
-##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one geckodriver-v0.20.1 x64 version) please note the the current version of firefox on kali linux is (firefox 52) which is not supported by the geckodriver version that we are using , so make sure to upgrade you firefox version if you are using a kali linux , we are working on build a script to automate the whole process for you.
+##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one "geckodriver-v0.20.1 x64" version) please note the the current version of firefox on kali linux is (firefox 52) which is not supported by the geckodriver version that we are using , so make sure to upgrade your firefox version if you are using kali linux , we are working on build a script to automate the whole process for you.
 
 ### Usage : 
 
