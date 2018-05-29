@@ -9,7 +9,7 @@ XSSRadare will use some hardcoded payloads to test for XSS , for now we prefer t
 
 ### Requirements : 
 
-You can install all the dependencies for XSSRadare using the following commands (for debian based distros): 
+You can install all the dependencies for XSSRadare using the following commands : 
 
 ```askar@hackbook:~# sudo ./system_requirments.sh ```
 
@@ -19,7 +19,7 @@ And make sure to add this line to your ```.bashrc``` file manually :
 
 This line will make sure to link the geckodriver path to your current ```PATH``` so the XSSRadare can recognize it.
 
-##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one geckodriver-v0.20.1 x64 version).
+##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one geckodriver-v0.20.1 x64 version) please note the the current version of firefox on kali linux is (firefox 52) which is not supported by the geckodriver version that we are using , so make sure to upgrade you firefox version if you are using a kali linux , we are working on build a script to automate the whole process for you.
 
 ### Usage : 
 
@@ -75,5 +75,7 @@ askar@hackbook:~#
 ```
 
 ### Screenshots :
+![Test Kali Image](ScanKaliWithView.png)
 
+![Test Ubuntu Image without view](ScanWithoutView.png)
 
