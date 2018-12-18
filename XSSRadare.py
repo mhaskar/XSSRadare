@@ -41,7 +41,13 @@ arparser.add_argument(
     "-fi", "--file", required=False, help="name of the urls file to scan"
 )
 
+arparser.add_argument(
+    "-c", "--cookies", required=False, help="cookies you want to use NAME:VALUE:PATH"
+)
+
 parser = vars(arparser.parse_args())
+
+
 
 # global vars to control the options
 url = parser["url"]
@@ -49,6 +55,7 @@ user_view = parser["view"]
 stop = parser["stop"]
 negative = parser["negative"]
 urls_file = parser["file"]
+cookies_option = parser["cookies"]
 global scan_type
 
 
@@ -141,6 +148,12 @@ def print_scan_finish(xssnum):
     message = "[+] Scan finished , number of found XSS : %i " % xssnum
     cprint(message, "blue")
 def fuzz_get_urls(url):
+    if cookies_option is not None:
+        cookies = cookies_option.split(":")
+        cookies_name = cookies[0]
+        cookies_value= cookies[1]
+        cookies_path = cookies[2]
+        cookie_dict = {'name': cookies_name, 'value': cookies_value, 'path': cookies_path}
     number_of_found_xss = 0
     scan_url = get_url(url)
     params = decode_url(url)
@@ -152,6 +165,9 @@ def fuzz_get_urls(url):
             url_to_send = encode_url(scan_url, params)
             raw_params = urllib.urlencode(params)
             browser = webdriver.Firefox()
+            if cookies_option is not None:
+                browser.get(url)
+                browser.add_cookie(cookie_dict)
             browser.get(url_to_send)
             time.sleep(1)
 
