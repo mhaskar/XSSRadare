@@ -19,14 +19,14 @@ And make sure to add this line to your ```.bashrc``` file manually :
 
 This line will make sure to link the geckodriver path to your current ```PATH``` so the XSSRadare can recognize it.
 
-##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one "geckodriver-v0.20.1 x64" version) please note the the current version of firefox on kali linux is (firefox 52) which is not supported by the geckodriver version that we are using , so make sure to upgrade your firefox version if you are using kali linux , we are working on build a script to automate the whole process for you.
+##### Note : sometimes you need to check your firefox compatibility with geckodriver in order to run the script correctly (currently we are using the latest one "geckodriver-v0.26.0 x64" version)
 
 ### Usage :
 
 After installing all the dependencies , you can run this command to start XSSRadare :
 
 ```
-askar@hackbook:~# python XSSRadare.py  -h
+askar@hackbook:~# python3 XSSRadare.py  -h
 
  \ \/ / __/ __| _ \__ _ __| |___ _ _
   >  <\__ \__ \   / _` / _` / -_) '_|
@@ -46,6 +46,10 @@ optional arguments:
                       name of the urls file to scan
 -c COOKIES, --cookies COOKIES
                       cookies you want to use NAME:VALUE:PATH
+-f, --full            use 666 payloads
+-t TIMEOUT, --timeout TIMEOUT
+                      set timeout between request and alert() check, in
+                      seconds
 
 
 ```
@@ -60,11 +64,17 @@ This command can be explained as following :
 - --file : file name that contains all URLs that you want to scan.
 
 - --cookies : if you have any cookies you can add them using this option
+-  -f, --full            use 666 payloads
+-  -t TIMEOUT, --timeout TIMEOUT
+                        set timeout between request and alert() check, in
+                        seconds
+
+
 
 You can start a simple XSS scan for a url using the following command :
 
 ```
-askar@hackbook:~# python XSSRadare.py --url "http://localhost/xss.php?name=askar&age=21"
+askar@hackbook:~# python3 XSSRadare.py --url "http://localhost/xss.php?name=askar&age=21"
  __  _____ ___ ___         _
  \ \/ / __/ __| _ \__ _ __| |___ _ _
   >  <\__ \__ \   / _` / _` / -_) '_|
