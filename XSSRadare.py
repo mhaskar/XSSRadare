@@ -1,10 +1,9 @@
-#!/usr/bin/python
-
+#!/usr/bin/python3
 
 import sys
-import urlparse
 import urllib
-import urllib2
+import urllib.parse
+import urllib3
 import time
 import os
 import argparse
@@ -15,7 +14,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoAlertPresentException
 
 
-print banner()
+print(banner())
 
 arparser = argparse.ArgumentParser()
 
@@ -24,7 +23,7 @@ arparser.add_argument(
 )
 
 arparser.add_argument(
-    "-v", "--view", required=False, help="view firefox (on/off)", default="on"
+    "-v", "--view", required=False, help="view firefox (on/off)", default="off"
 )
 
 arparser.add_argument(
@@ -45,6 +44,14 @@ arparser.add_argument(
     "-c", "--cookies", required=False, help="cookies you want to use NAME:VALUE:PATH"
 )
 
+arparser.add_argument(
+    "-f", "--full", required=False, help="use 666 payloads", action='store_true'
+)
+
+arparser.add_argument(
+    "-t", "--timeout", required=False, help="set timeout between request and alert() check, in seconds", default="1"
+)
+
 parser = vars(arparser.parse_args())
 
 
@@ -56,6 +63,8 @@ stop = parser["stop"]
 negative = parser["negative"]
 urls_file = parser["file"]
 cookies_option = parser["cookies"]
+full = parser["full"]
+timeout = int(parser["timeout"])
 global scan_type
 
 
@@ -90,15 +99,20 @@ if user_view == "off":
 
 
 def get_payloads():
-    payload_file = open("payloads.txt", "r")
+    if full:
+        payload_file = open("666_lines_of_XSS_vectors.html", "r")
+        print("Using payloads from file 666_lines_of_XSS_vectors.html")
+    else:
+        payload_file = open("payloads.txt", "r")
+        print("Using payloads from file payloads.txt")
     payloads = payload_file.read().splitlines()
     return payloads
 
 
 def decode_url(url):
-    raw_url = urlparse.urlparse(url)
+    raw_url = urllib.parse.urlparse(url)
     query_string = raw_url.query
-    params = dict(urlparse.parse_qsl(query_string))
+    params = dict(urllib.parse.parse_qsl(query_string))
     return params
 
 
@@ -118,19 +132,19 @@ def get_url(url):
 
 
 def encode_url(url, params):
-    params_encoded = urllib.urlencode(params)
+    params_encoded = urllib.parse.urlencode(params)
     full_url = url + "?" + params_encoded
     return full_url
 
 
 def print_positive_scan(url, params):
-    unqouted_params = urllib2.unquote(params).decode('utf8')
+    unqouted_params = urllib.parse.unquote(params)#.decode('utf8')
     message = "[+] XSS Found on %s with params %s" % (url, unqouted_params)
     cprint(message, "green")
 
 
 def print_negative_scan(url_to_scan):
-    unqouted_url = urllib2.unquote(url_to_scan).decode('utf8')
+    unqouted_url = urllib3.unquote(url_to_scan).decode('utf8')
     message = "[-]No XSS %s" % unqouted_url
     cprint(message, "red")
 
@@ -163,13 +177,13 @@ def fuzz_get_urls(url):
             previous_value = params[param]
             params[param] = payload
             url_to_send = encode_url(scan_url, params)
-            raw_params = urllib.urlencode(params)
+            raw_params = urllib.parse.urlencode(params)
             browser = webdriver.Firefox()
             if cookies_option is not None:
                 browser.get(url)
                 browser.add_cookie(cookie_dict)
             browser.get(url_to_send)
-            time.sleep(1)
+            time.sleep(timeout)
 
             try:
                 if browser.switch_to.alert.text is not None:
