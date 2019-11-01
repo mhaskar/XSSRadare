@@ -100,8 +100,8 @@ if user_view == "off":
 
 def get_payloads():
     if full:
-        payload_file = open("666_lines_of_XSS_vectors.html", "r")
-        print("Using payloads from file 666_lines_of_XSS_vectors.html")
+        payload_file = open("666_lines_of_XSS_vectors.txt", "r")
+        print("Using payloads from file 666_lines_of_XSS_vectors.txt")
     else:
         payload_file = open("payloads.txt", "r")
         print("Using payloads from file payloads.txt")
